@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Get Your Lucky Number Here </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 30px;
+      background-color: #111;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .logo-bar {
+      display: flex;
+      justify-content: center;
+      gap: 200px;
+      margin-bottom: 150px;
+      flex-wrap: wrap;
+    }
+
+    .logo-bar img {
+      height: 150px;
+    }
+
+    /* Swinging left to right animation */
+    .swing-logo {
+      animation: swing 2s ease-in-out infinite;
+      transform-origin: center center;
+    }
+
+    @keyframes swing {
+      0%   { transform: rotate(-15deg); }
+      50%  { transform: rotate(15deg); }
+      100% { transform: rotate(-15deg); }
+    }
+
+    #number {
+      font-size: 150px;
+      font-weight: bold;
+      color: #00ff99;
+      margin: 40px;
+    }
+
+    button {
+      padding: 20px 40px;
+      font-size: 22px;
+      background-color: #ff6600;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #cc5200;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🎰 Get Your Ong Ong Number 🎰</h1>
+
+<div class="logo-bar">
+  <img class="swing-logo" src="https://github.com/ronalddjindy/lucky88-4d-spinner/blob/main/MAGNUM-removebg-preview.png?raw=true" alt="Magnum">
+  <img class="swing-logo" src="https://github.com/ronalddjindy/lucky88-4d-spinner/blob/main/TOTO-removebg-preview.png?raw=true" alt="Toto">
+  <img class="swing-logo" src="https://github.com/ronalddjindy/lucky88-4d-spinner/blob/main/cashsweep-removebg-preview.png?raw=true" alt="Big Sweep">
+  <img class="swing-logo" src="https://github.com/ronalddjindy/lucky88-4d-spinner/blob/main/damacai-removebg-preview.png?raw=true" alt="Da Ma Cai">
+</div>
+
+<div id="number">0000</div>
+<button onclick="spinNumber()">SPIN</button>
+
+<audio id="bgm" autoplay loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Confetti Fireworks Script -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+  function launchFireworks() {
+    var duration = 2 * 1000;
+    var end = Date.now() + duration;
+
+    (function frame() {
+      confetti({
+        particleCount: 7,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 }
+      });
+      confetti({
+        particleCount: 7,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 }
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
+  }
+
+  function spinNumber() {
+    let duration = 1500;
+    let interval = 50;
+    let elapsed = 0;
+    const numberDiv = document.getElementById("number");
+
+    const spinner = setInterval(() => {
+      let num = Math.floor(Math.random() * 10000);
+      numberDiv.textContent = String(num).padStart(4, '0');
+      elapsed += interval;
+
+      if (elapsed >= duration) {
+        clearInterval(spinner);
+        let finalNum = Math.floor(Math.random() * 10000);
+        numberDiv.textContent = String(finalNum).padStart(4, '0');
+
+        // 🎆 Launch fireworks after spin finishes
+        launchFireworks();
+      }
+    }, interval);
+  }
+</script>
+
+</body>
+</html>
