@@ -24,7 +24,6 @@
       height: 150px;
     }
 
-    /* Swinging left to right animation */
     .swing-logo {
       animation: swing 2s ease-in-out infinite;
       transform-origin: center center;
@@ -34,6 +33,15 @@
       0%   { transform: rotate(-15deg); }
       50%  { transform: rotate(15deg); }
       100% { transform: rotate(-15deg); }
+    }
+
+    .blink {
+      animation: blink 0.6s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
 
     #number {
@@ -62,11 +70,27 @@
 
 <h1>🎰 Get Your Ong Ong Number 🎰</h1>
 
+<!-- ✅ Clickable logos pointing to result pages -->
 <div class="logo-bar">
-  <img class="swing-logo" src="https://github.com/ronalddjindy/lucky88-4d-spinner/blob/main/MAGNUM-removebg-preview.png?raw=true" alt="Magnum">
-  <img class="swing-logo" src="https://github.com/ronalddjindy/lucky88-4d-spinner/blob/main/TOTO-removebg-preview.png?raw=true" alt="Toto">
-  <img class="swing-logo" src="https://github.com/ronalddjindy/lucky88-4d-spinner/blob/main/cashsweep-removebg-preview.png?raw=true" alt="Big Sweep">
-  <img class="swing-logo" src="https://github.com/ronalddjindy/lucky88-4d-spinner/blob/main/damacai-removebg-preview.png?raw=true" alt="Da Ma Cai">
+  <!-- Magnum Result -->
+  <a href="https://www.magnum4d.my/en/results" target="_blank">
+    <img id="magnum-logo" class="swing-logo" src="https://github.com/ronalddjindy/lucky88-4d-spinner/blob/main/MAGNUM-removebg-preview.png?raw=true" alt="Magnum">
+  </a>
+
+  <!-- Toto Result -->
+  <a href="https://www.sportstoto.com.my/results" target="_blank">
+    <img id="toto-logo" class="swing-logo" src="https://github.com/ronalddjindy/lucky88-4d-spinner/blob/main/TOTO-removebg-preview.png?raw=true" alt="Toto">
+  </a>
+
+  <!-- Big Sweep Result -->
+  <a href="https://www.bigwinnings.com.my/result" target="_blank">
+    <img id="sweep-logo" class="swing-logo" src="https://github.com/ronalddjindy/lucky88-4d-spinner/blob/main/cashsweep-removebg-preview.png?raw=true" alt="Big Sweep">
+  </a>
+
+  <!-- Da Ma Cai Result -->
+  <a href="https://www.damacai.com.my/Result.aspx" target="_blank">
+    <img id="damacai-logo" class="swing-logo" src="https://github.com/ronalddjindy/lucky88-4d-spinner/blob/main/damacai-removebg-preview.png?raw=true" alt="Da Ma Cai">
+  </a>
 </div>
 
 <div id="number">0000</div>
@@ -76,11 +100,11 @@
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Confetti Fireworks Script -->
+<!-- Fireworks Script -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
   function launchFireworks() {
-    var duration = 2 * 1000;
+    var duration = 2000;
     var end = Date.now() + duration;
 
     (function frame() {
@@ -109,6 +133,12 @@
     let elapsed = 0;
     const numberDiv = document.getElementById("number");
 
+    // 🧼 Clear blinking from all logos
+    const logoIds = ["magnum-logo", "toto-logo", "sweep-logo", "damacai-logo"];
+    logoIds.forEach(id => {
+      document.getElementById(id).classList.remove("blink");
+    });
+
     const spinner = setInterval(() => {
       let num = Math.floor(Math.random() * 10000);
       numberDiv.textContent = String(num).padStart(4, '0');
@@ -119,8 +149,13 @@
         let finalNum = Math.floor(Math.random() * 10000);
         numberDiv.textContent = String(finalNum).padStart(4, '0');
 
-        // 🎆 Launch fireworks after spin finishes
+        // 🎆 Fireworks
         launchFireworks();
+
+        // ✨ Pick one random logo to blink
+        const randomIndex = Math.floor(Math.random() * logoIds.length);
+        const winnerLogo = document.getElementById(logoIds[randomIndex]);
+        winnerLogo.classList.add("blink");
       }
     }, interval);
   }
